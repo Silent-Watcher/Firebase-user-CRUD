@@ -59,7 +59,11 @@ main .user_info p:last-child {
   font-size: 14px;
 }
 
-#editModal_btn {
+#closeEditModal_btn {
   top: 10px;
   left: 10px;
+}
+
+#edit_panel form {
+  left: -50%;
 }/*# sourceMappingURL=style.css.map */

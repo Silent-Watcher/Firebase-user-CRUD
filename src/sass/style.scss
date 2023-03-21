@@ -52,7 +52,12 @@ main {
   }
 }
 
-#editModal_btn{
+#closeEditModal_btn{
   top: 10px;
   left: 10px;
+}
+#edit_panel {
+  form {
+    left: -50%;
+  }
 }

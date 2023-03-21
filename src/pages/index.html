@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Firebase user Crud</title>
+    <!-- animate.css -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
     <!-- alert -->
     <link
       rel="stylesheet"
@@ -30,21 +35,21 @@
   </head>
   <body class="overflow-hidden position-relative">
     <section id="edit_panel" class="w-25 ">
-      <form class="text-center bg-secondary p-4 rounded m-3 position-absolute">
-        <button id="editModal_btn" type="button" class="btn-close btn-close-white position-absolute"></button>
+      <form id="editModal" class="text-center bg-secondary p-4 rounded m-3 position-absolute">
+        <button id="closeEditModal_btn" type="button" class="btn-close btn-close-white position-absolute"></button>
         <div class="mb-3 ">
           <label for="editName_input" class="form-label text-white">Name</label>
-          <input type="email" class="form-control" id="editName_input">
+          <input required type="text" class="form-control" id="editName_input">
         </div>
         <div class="mb-3 ">
           <label for="editEmail_input" class="form-label text-white">Email address</label>
-          <input type="email" class="form-control" id="editEmail_input">
+          <input required type="email" class="form-control" id="editEmail_input">
         </div>
         <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label text-white">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
+          <label for="editPass_input" class="form-label text-white">Password</label>
+          <input required type="password" class="form-control" id="editPass_input">
         </div>
-        <button type="submit" class="btn btn-dark">change</button>
+        <button id="edit_ctc_btn" type="submit" class="btn btn-dark">change</button>
       </form>
     </section>
     <div class="container-fluid">

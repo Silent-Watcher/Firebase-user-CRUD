@@ -2,6 +2,9 @@
 
 const $ = document;
 const FirebaseCollection = 'users';
+const closeEditModalBtn = $.querySelector('#closeEditModal_btn');
+const editModal = $.querySelector('#editModal');
+const editCtcBtn = $.querySelector('#edit_ctc_btn');
 
 async function fetchUsersFromFirebase() {
   await fetch(
@@ -40,11 +43,11 @@ function createUserElement(id, user) {
 <section class="user_info ps-4">
   <p class="name mb-0 text-light">${user.name}</p>
   <p class="email mb-0 text-light">${user.email}</p>
-  <p class="pass mb-0 text-light">${user.password}</p>
+  <p class="password mb-0 text-light">${user.password}</p>
 </section>
 <section class="buttons d-flex w-25">
   <button class="btn btn-secondary me-2 " onclick ='removeUser(event);'>delete</button>
-  <button class="btn btn-secondary">edit</button>
+  <button class="btn btn-secondary" onclick ='openEditModal(event);'>edit</button>
 </section>`
   );
   return userElem;
@@ -85,4 +88,60 @@ async function removeUserFromFirebase(collection, userId) {
   });
 }
 
+// edit modal open and close
+closeEditModalBtn.addEventListener('click', function () {
+  this.parentElement.style.left = '-50%';
+});
 
+function openEditModal(event) {
+  editModal.style.left = 'initial';
+  editModal.dataset.activeUserId =
+    event.target.parentElement.parentElement.dataset.id;
+}
+//
+
+editModal.addEventListener('submit', (e) => {
+  e.preventDefault();
+  let name = $.querySelector('#editName_input'),
+    email = $.querySelector('#editEmail_input'),
+    password = $.querySelector('#editPass_input');
+  sendEditUserRequest(FirebaseCollection, e.target.dataset.activeUserId, {
+    name: name.value,
+    email: email.value,
+    password: password.value,
+  });
+  cleanEditModal([name, email, password]);
+});
+
+async function sendEditUserRequest(collection, userId, newData) {
+  await fetch(
+    `https://usercrud-428ab-default-rtdb.firebaseio.com/${collection}/${userId}.json`,
+    {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'PUT',
+      body: JSON.stringify(newData),
+    }
+  ).then((res) => {
+    if (res.status === 200) {
+      Swal.fire('edited!', 'user info has been edited.', 'success');
+    }
+  });
+  addEditedUserInfo(newData);
+}
+
+function addEditedUserInfo(newData) {
+  console.log(Object.entries(newData));
+  for (const [key, value] of Object.entries(newData)) {
+    console.log(key, value);
+    console.log(
+      $.querySelector(`[data-id = '-NR3xgCBnrH42yo7W8-8']  p.${key}`)
+    );
+    $.querySelector(`[data-id = '-NR3xgCBnrH42yo7W8-8']  p.${key}`).innerHTML =
+      value;
+  }
+}
+
+function cleanEditModal(inputs) {
+  closeEditModalBtn.click();
+  inputs.forEach((input) => (input.value = ''));
+}
