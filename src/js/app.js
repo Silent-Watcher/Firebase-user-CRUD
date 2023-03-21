@@ -126,17 +126,13 @@ async function sendEditUserRequest(collection, userId, newData) {
       Swal.fire('edited!', 'user info has been edited.', 'success');
     }
   });
-  addEditedUserInfo(newData);
+  addEditedUserInfo(userId, newData);
 }
 
-function addEditedUserInfo(newData) {
+function addEditedUserInfo(userId , newData) {
   console.log(Object.entries(newData));
   for (const [key, value] of Object.entries(newData)) {
-    console.log(key, value);
-    console.log(
-      $.querySelector(`[data-id = '-NR3xgCBnrH42yo7W8-8']  p.${key}`)
-    );
-    $.querySelector(`[data-id = '-NR3xgCBnrH42yo7W8-8']  p.${key}`).innerHTML =
+    $.querySelector(`[data-id = '${userId}']  p.${key}`).innerHTML =
       value;
   }
 }
