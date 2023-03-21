@@ -95,7 +95,7 @@ function openEditModal(event) {
     event.target.parentElement.parentElement.dataset.id;
 }
 //
-
+// edit user functionality
 editModal.addEventListener('submit', (e) => {
   e.preventDefault();
   let name = $.querySelector('#editName_input'),
@@ -132,3 +132,4 @@ function cleanEditModal(inputs) {
   closeEditModalBtn.click();
   inputs.forEach((input) => (input.value = ''));
 }
+// 
