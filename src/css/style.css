@@ -43,6 +43,7 @@ main {
 }
 main .user {
   background-color: #353535;
+  margin: 5px;
 }
 main figure {
   background-color: #232323;
