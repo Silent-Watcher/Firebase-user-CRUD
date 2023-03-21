@@ -1,9 +1,12 @@
 'use strict';
 
 const $ = document;
+const FirebaseCollection = 'users';
 
-function fetchUsersFromFirebase() {
-  fetch('https://usercrud-428ab-default-rtdb.firebaseio.com/users.json')
+async function fetchUsersFromFirebase() {
+  await fetch(
+    `https://usercrud-428ab-default-rtdb.firebaseio.com/${FirebaseCollection}.json`
+  )
     .then((res) => {
       if (res.status === 200) return res.json();
     })
@@ -14,14 +17,15 @@ function fetchUsersFromFirebase() {
 
 function addUsers(users) {
   let usersFragment = document.createDocumentFragment();
-  for (const user of Object.values(users)) {
-    usersFragment.appendChild(createUserElement(user));
+  for (const [id, info] of Object.entries(users)) {
+    usersFragment.appendChild(createUserElement(id, info));
   }
   $.querySelector('main').appendChild(usersFragment);
 }
 
-function createUserElement(user) {
+function createUserElement(id, user) {
   let userElem = $.createElement('div');
+  userElem.dataset.id = id;
   userElem.className =
     'user d-flex justify-content-around align-items-center p-3';
   userElem.insertAdjacentHTML(
@@ -39,7 +43,7 @@ function createUserElement(user) {
   <p class="pass mb-0 text-light">${user.password}</p>
 </section>
 <section class="buttons d-flex w-25">
-  <button class="btn btn-secondary me-2">delete</button>
+  <button class="btn btn-secondary me-2 " onclick ='removeUser(event);'>delete</button>
   <button class="btn btn-secondary">edit</button>
 </section>`
   );
@@ -50,3 +54,33 @@ window.addEventListener('load', () => {
   fetchUsersFromFirebase();
 });
 
+async function removeUser(event) {
+  let userElem = event.target.parentElement.parentElement;
+  await Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      removeUserFromFirebase(FirebaseCollection, userElem.dataset.id);
+    }
+  });
+  userElem.remove();
+}
+
+async function removeUserFromFirebase(collection, userId) {
+  await fetch(
+    `https://usercrud-428ab-default-rtdb.firebaseio.com/${collection}/${userId}.json`,
+    {
+      method: 'DELETE',
+    }
+  ).then((res) => {
+    if (res.status === 200) {
+      Swal.fire('Deleted!', 'user has been deleted.', 'success');
+    }
+  });
+}
