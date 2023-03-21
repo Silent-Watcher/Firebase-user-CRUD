@@ -57,4 +57,9 @@ main .user_info p:first-child {
 }
 main .user_info p:last-child {
   font-size: 14px;
+}
+
+#editModal_btn {
+  top: 10px;
+  left: 10px;
 }/*# sourceMappingURL=style.css.map */

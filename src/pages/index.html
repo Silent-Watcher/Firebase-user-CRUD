@@ -29,6 +29,24 @@
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body class="overflow-hidden position-relative">
+    <section id="edit_panel" class="w-25 ">
+      <form class="text-center bg-secondary p-4 rounded m-3 position-absolute">
+        <button id="editModal_btn" type="button" class="btn-close btn-close-white position-absolute"></button>
+        <div class="mb-3 ">
+          <label for="editName_input" class="form-label text-white">Name</label>
+          <input type="email" class="form-control" id="editName_input">
+        </div>
+        <div class="mb-3 ">
+          <label for="editEmail_input" class="form-label text-white">Email address</label>
+          <input type="email" class="form-control" id="editEmail_input">
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label text-white">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+        <button type="submit" class="btn btn-dark">change</button>
+      </form>
+    </section>
     <div class="container-fluid">
       <div class="container">
         <div class="row">
