@@ -18,3 +18,6 @@
 </div> */}
 
 'use strict';
+
+const $ = document;
+
