@@ -1,0 +1,70 @@
+body {
+  overflow: hidden;
+}
+
+#github {
+  position: relative;
+  display: inline-block;
+}
+
+#github_wrapper {
+  position: relative;
+}
+#github_wrapper::after {
+  content: "";
+  position: absolute;
+  width: 100px;
+  background-color: #232323;
+  height: 3px;
+  border-radius: 5px;
+  top: 50%;
+  left: 40%;
+  -webkit-user-select: none !important;
+     -moz-user-select: none !important;
+          user-select: none !important;
+}
+#github_wrapper::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  background-color: #232323;
+  height: 3px;
+  border-radius: 5px;
+  top: 50%;
+  right: 40%;
+  margin-left: 5px;
+  -webkit-user-select: none !important;
+     -moz-user-select: none !important;
+          user-select: none !important;
+}
+
+figure {
+  background-color: #232323;
+  border-radius: 100%;
+  overflow: hidden;
+  width: 15%;
+}
+
+main {
+  height: 400px;
+  overflow-y: scroll;
+  background-color: #747474;
+}
+main .user {
+  background-color: #353535;
+}
+
+.user_info {
+  flex-grow: 2;
+  padding-left: 20px;
+}
+.user_info p:first-child {
+  font-size: 25px;
+}
+.user_info p:last-child {
+  font-size: 14px;
+}
+
+#copyright {
+  text-transform: uppercase;
+}/*# sourceMappingURL=style.css.map */
