@@ -1,15 +1,14 @@
 'use strict';
 
-const $ = document;
-const FirebaseCollection = 'users';
-const closeEditModalBtn = $.querySelector('#closeEditModal_btn');
-const editModal = $.querySelector('#editModal');
-const editCtcBtn = $.querySelector('#edit_ctc_btn');
+const $ = document,
+  firebaseUrl = 'https://usercrud-428ab-default-rtdb.firebaseio.com/',
+  FirebaseCollectionName = 'users',
+  closeEditModalBtn = $.querySelector('#closeEditModal_btn'),
+  editModal = $.querySelector('#editModal'),
+  editCtcBtn = $.querySelector('#edit_ctc_btn');
 
 async function fetchUsersFromFirebase() {
-  await fetch(
-    `https://usercrud-428ab-default-rtdb.firebaseio.com/${FirebaseCollection}.json`
-  )
+  await fetch(`${firebaseUrl}${FirebaseCollectionName}.json`)
     .then((res) => {
       if (res.status === 200) return res.json();
     })
@@ -69,19 +68,16 @@ async function removeUser(event) {
     confirmButtonText: 'Yes, delete it!',
   }).then((result) => {
     if (result.isConfirmed) {
-      removeUserFromFirebase(FirebaseCollection, userElem.dataset.id);
+      removeUserFromFirebase(FirebaseCollectionName, userElem.dataset.id);
     }
   });
   userElem.remove();
 }
 
 async function removeUserFromFirebase(collection, userId) {
-  await fetch(
-    `https://usercrud-428ab-default-rtdb.firebaseio.com/${collection}/${userId}.json`,
-    {
-      method: 'DELETE',
-    }
-  ).then((res) => {
+  await fetch(`${firebaseUrl}${collection}/${userId}.json`, {
+    method: 'DELETE',
+  }).then((res) => {
     if (res.status === 200) {
       Swal.fire('Deleted!', 'user has been deleted.', 'success');
     }
@@ -105,7 +101,7 @@ editModal.addEventListener('submit', (e) => {
   let name = $.querySelector('#editName_input'),
     email = $.querySelector('#editEmail_input'),
     password = $.querySelector('#editPass_input');
-  sendEditUserRequest(FirebaseCollection, e.target.dataset.activeUserId, {
+  sendEditUserRequest(FirebaseCollectionName, e.target.dataset.activeUserId, {
     name: name.value,
     email: email.value,
     password: password.value,
@@ -114,14 +110,11 @@ editModal.addEventListener('submit', (e) => {
 });
 
 async function sendEditUserRequest(collection, userId, newData) {
-  await fetch(
-    `https://usercrud-428ab-default-rtdb.firebaseio.com/${collection}/${userId}.json`,
-    {
-      headers: { 'Content-Type': 'application/json' },
-      method: 'PUT',
-      body: JSON.stringify(newData),
-    }
-  ).then((res) => {
+  await fetch(`${firebaseUrl}${collection}/${userId}.json`, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'PUT',
+    body: JSON.stringify(newData),
+  }).then((res) => {
     if (res.status === 200) {
       Swal.fire('edited!', 'user info has been edited.', 'success');
     }
@@ -129,11 +122,9 @@ async function sendEditUserRequest(collection, userId, newData) {
   addEditedUserInfo(userId, newData);
 }
 
-function addEditedUserInfo(userId , newData) {
-  console.log(Object.entries(newData));
+function addEditedUserInfo(userId, newData) {
   for (const [key, value] of Object.entries(newData)) {
-    $.querySelector(`[data-id = '${userId}']  p.${key}`).innerHTML =
-      value;
+    $.querySelector(`[data-id = '${userId}']  p.${key}`).innerHTML = value;
   }
 }
 
