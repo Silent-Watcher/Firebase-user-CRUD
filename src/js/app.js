@@ -17,7 +17,7 @@ function addUsers(users) {
   for (const user of Object.values(users)) {
     usersFragment.appendChild(createUserElement(user));
   }
-  $.querySelector('main').append(usersFragment);
+  $.querySelector('main').appendChild(usersFragment);
 }
 
 function createUserElement(user) {
@@ -45,8 +45,6 @@ function createUserElement(user) {
   );
   return userElem;
 }
-
-
 
 window.addEventListener('load', () => {
   fetchUsersFromFirebase();
