@@ -59,5 +59,6 @@ const Toast = Swal.mixin({
 
 // cursor
 new kursor({
-  type: 1
+  type: 1,
+  removeDefaultCursor: true,
 })
