@@ -132,4 +132,7 @@ function cleanEditModal(inputs) {
   closeEditModalBtn.click();
   inputs.forEach((input) => (input.value = ''));
 }
-// 
+// cursor
+new kursor({
+  type: 1
+})
