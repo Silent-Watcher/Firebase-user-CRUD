@@ -69,9 +69,9 @@ async function removeUser(event) {
   }).then((result) => {
     if (result.isConfirmed) {
       removeUserFromFirebase(FirebaseCollectionName, userElem.dataset.id);
+      userElem.remove();
     }
   });
-  userElem.remove();
 }
 
 async function removeUserFromFirebase(collection, userId) {
