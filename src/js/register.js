@@ -2,7 +2,6 @@
 
 const $ = document;
 const form = $.querySelector('form');
-
 const email = $.querySelector('#email');
 const name = $.querySelector('#name');
 const password = $.querySelector('#password');

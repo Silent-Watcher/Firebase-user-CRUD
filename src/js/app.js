@@ -1,4 +1,5 @@
 'use strict';
+import defaultAvatarUrl from "../img/male_avatar.png";
 
 const $ = document,
   firebaseUrl = 'https://usercrud-428ab-default-rtdb.firebaseio.com/',
@@ -6,6 +7,10 @@ const $ = document,
   closeEditModalBtn = $.querySelector('#closeEditModal_btn'),
   editModal = $.querySelector('#editModal'),
   editCtcBtn = $.querySelector('#edit_ctc_btn');
+
+window.addEventListener('load', () => {
+  fetchUsersFromFirebase();
+});
 
 async function fetchUsersFromFirebase() {
   await fetch(`${firebaseUrl}${FirebaseCollectionName}.json`)
@@ -25,6 +30,18 @@ function addUsers(users) {
   $.querySelector('main').appendChild(usersFragment);
 }
 
+// edit modal open and close
+closeEditModalBtn.addEventListener('click', function () {
+  this.parentElement.style.left = '-50%';
+});
+
+function openEditModal(event) {
+  editModal.style.left = 'initial';
+  editModal.dataset.activeUserId =
+    event.target.parentElement.parentElement.dataset.id;
+}
+//
+
 function createUserElement(id, user) {
   let userElem = $.createElement('div');
   userElem.dataset.id = id;
@@ -35,7 +52,7 @@ function createUserElement(id, user) {
     `<figure class="mb-0 rounded-circle overflow-hidden">
   <img
     class="img-fluid"
-    src="../img/male_avatar.png"
+    src="${defaultAvatarUrl}"
     alt="user_avatar"
   />
 </figure>
@@ -45,16 +62,12 @@ function createUserElement(id, user) {
   <p class="password mb-0 text-light">${user.password}</p>
 </section>
 <section class="buttons d-flex w-25">
-  <button class="btn btn-secondary me-2 " onclick ='removeUser(event);'>delete</button>
-  <button class="btn btn-secondary" onclick ='openEditModal(event);'>edit</button>
+  <button class="remove_btn btn btn-secondary me-2 " onclick ='removeUser(event)'>delete</button>
+  <button class="btn btn-secondary" onclick ='openEditModal(event)'>edit</button>
 </section>`
   );
   return userElem;
 }
-
-window.addEventListener('load', () => {
-  fetchUsersFromFirebase();
-});
 
 async function removeUser(event) {
   let userElem = event.target.parentElement.parentElement;
@@ -84,17 +97,6 @@ async function removeUserFromFirebase(collection, userId) {
   });
 }
 
-// edit modal open and close
-closeEditModalBtn.addEventListener('click', function () {
-  this.parentElement.style.left = '-50%';
-});
-
-function openEditModal(event) {
-  editModal.style.left = 'initial';
-  editModal.dataset.activeUserId =
-    event.target.parentElement.parentElement.dataset.id;
-}
-//
 // edit user functionality
 editModal.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -136,4 +138,9 @@ function cleanEditModal(inputs) {
 new kursor({
   type: 1,
   removeDefaultCursor: true,
-})
+});
+
+
+window.removeUser = removeUser;
+window.removeUserFromFirebase = removeUserFromFirebase;
+window.openEditModal = openEditModal;
