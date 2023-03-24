@@ -6,7 +6,7 @@ implement user crud operations using firebase database and api calls
 
 ## Demo 🤗
 
-https://firebase-user-crud.pages.dev/
+https://2259bf5d.firebase-user-crud.pages.dev/
 
 
 ## Run Locally
